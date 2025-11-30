@@ -1,0 +1,10 @@
+CREATE SCHEMA wordle;
+
+CREATE ROLE wordle_select NOINHERIT; 
+
+GRANT USAGE ON SCHEMA wordle TO wordle_select;
+
+GRANT SELECT ON ALL TABLES IN SCHEMA wordle TO wordle_select;
+
+ALTER DEFAULT PRIVILEGES IN SCHEMA wordle
+GRANT SELECT ON TABLES TO wordle_select;
