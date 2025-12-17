@@ -40,3 +40,7 @@ WHERE
 	--AND P5 = ''
 	--and p5 not in (select letter from wordle.letters)
 	;
+
+insert into grey values ('');
+insert into yellow values ('');
+insert into green values ( , '');
