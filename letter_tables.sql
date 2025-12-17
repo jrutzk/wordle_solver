@@ -1,5 +1,6 @@
 create table wordle.yellow
 (
+position int,
 letter char
 );
 
