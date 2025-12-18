@@ -70,9 +70,9 @@ WHERE
 	;
 
 
-truncate table worlde.yellow;
+truncate table wordle.yellow;
 update wordle.green set letter = '_';
-truncate table grey;
+truncate table wordle.grey;
 
 SELECT
 	*
