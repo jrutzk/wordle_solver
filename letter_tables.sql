@@ -14,3 +14,10 @@ create table wordle.grey
 (
 letter char
 );
+
+create table wordle.guessed_letters
+(
+color text,
+position int,
+letter char
+);
