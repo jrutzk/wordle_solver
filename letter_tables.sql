@@ -10,6 +10,9 @@ position int,
 letter char
 );
 
+ALTER TABLE WORDLE.GREEN
+ADD CONSTRAINT GREEN_POS_UQ UNIQUE (POSITION);
+
 create table wordle.grey
 (
 letter char
