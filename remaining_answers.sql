@@ -82,48 +82,30 @@ AND NOT EXISTS (
 -- ======================
 -- wordle.yellow: must appear elsewhere
 -- ======================
-AND (
-    NOT EXISTS (SELECT 1 FROM wordle.yellow y WHERE y.position = 1)
-    OR EXISTS (
-        SELECT 1 FROM wordle.yellow y
-        WHERE y.position = 1
-          AND y.letter ILIKE ANY (ARRAY[a.p2, a.p3, a.p4, a.p5])
-    )
-)
-AND (
-    NOT EXISTS (SELECT 1 FROM wordle.yellow y WHERE y.position = 2)
-    OR EXISTS (
-        SELECT 1 FROM wordle.yellow y
-        WHERE y.position = 2
-          AND y.letter ILIKE ANY (ARRAY[a.p1, a.p3, a.p4, a.p5])
-    )
-)
-AND (
-    NOT EXISTS (SELECT 1 FROM wordle.yellow y WHERE y.position = 3)
-    OR EXISTS (
-        SELECT 1 FROM wordle.yellow y
-        WHERE y.position = 3
-          AND y.letter ILIKE ANY (ARRAY[a.p1, a.p2, a.p4, a.p5])
-    )
-)
-AND (
-    NOT EXISTS (SELECT 1 FROM wordle.yellow y WHERE y.position = 4)
-    OR EXISTS (
-        SELECT 1 FROM wordle.yellow y
-        WHERE y.position = 4
-          AND y.letter ILIKE ANY (ARRAY[a.p1, a.p2, a.p3, a.p5])
-    )
-)
-AND (
-    NOT EXISTS (SELECT 1 FROM wordle.yellow y WHERE y.position = 5)
-    OR EXISTS (
-        SELECT 1 FROM wordle.yellow y
-        WHERE y.position = 5
-          AND y.letter ILIKE ANY (ARRAY[a.p1, a.p2, a.p3, a.p4])
-    )
+AND NOT EXISTS (
+    SELECT 1
+    FROM wordle.yellow y
+    WHERE
+        -- letter appears in its forbidden position
+        (
+            (y.position = 1 AND a.p1 ILIKE y.letter) OR
+            (y.position = 2 AND a.p2 ILIKE y.letter) OR
+            (y.position = 3 AND a.p3 ILIKE y.letter) OR
+            (y.position = 4 AND a.p4 ILIKE y.letter) OR
+            (y.position = 5 AND a.p5 ILIKE y.letter)
+        )
+        OR
+        -- letter does NOT appear anywhere else
+        NOT (
+            (y.position <> 1 AND a.p1 ILIKE y.letter) OR
+            (y.position <> 2 AND a.p2 ILIKE y.letter) OR
+            (y.position <> 3 AND a.p3 ILIKE y.letter) OR
+            (y.position <> 4 AND a.p4 ILIKE y.letter) OR
+            (y.position <> 5 AND a.p5 ILIKE y.letter)
+        )
 );
 
---OLD
+--OLD version
 CREATE OR REPLACE VIEW WORDLE.REMAINING_ANSWERS AS
 SELECT
 	*
