@@ -15,3 +15,15 @@ from wordle.todays_word;
 insert into wordle.todays_word values ('quilt');
 
 SELECT * FROM wordle.todays_word_split;
+
+
+--create or replace view wordle.drawing as 
+select * from wordle.guesses_unpivot_view
+cross join wordle.todays_word
+where guess = 'aahed'
+and p1
+and p2
+and p3
+and p4
+and p5
+;
