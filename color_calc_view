@@ -1,0 +1,27 @@
+create or replace view wordle.color_calc_view as
+SELECT
+	G.GUESS,
+	T.WORD,
+	case when g.p1 = t.p1 then 'green'
+	when g.p1 not in (t.p1, t.p2, t.p3, t.p4, t.p5) then 'black'
+	when g.p1 in (t.p2, t.p3, t.p4, t.p5) then 'yellow'
+	end as first_letter,
+	case when g.p2 = t.p2 then 'green'
+	when g.p2 not in (t.p1, t.p2, t.p3, t.p4, t.p5) then 'black'
+	when g.p2 in (t.p1, t.p3, t.p4, t.p5) then 'yellow'
+	end as second_letter,
+	case when g.p3 = t.p3 then 'green'
+	when g.p3 not in (t.p1, t.p2, t.p3, t.p4, t.p5) then 'black'
+	when g.p3 in (t.p1, t.p2, t.p4, t.p5) then 'yellow'
+	end as third_letter,
+	case when g.p4 = t.p4 then 'green'
+	when g.p4 not in (t.p1, t.p2, t.p3, t.p4, t.p5) then 'black'
+	when g.p4 in (t.p1, t.p2, t.p3, t.p5) then 'yellow'
+	end as fourth_letter,
+	case when g.p5 = t.p5 then 'green'
+	when g.p5 not in (t.p1, t.p2, t.p3, t.p4, t.p5) then 'black'
+	when g.p5 in (t.p1, t.p2, t.p3, t.p4) then 'yellow'
+	end as fifth_letter
+FROM
+	WORDLE.GUESSES_POSITIONS_VIEW G
+	CROSS JOIN WORDLE.TODAYS_WORD_SPLIT T;
