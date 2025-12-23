@@ -97,3 +97,15 @@ WHERE
 	and ((select letter from yellow where position = 5) ilike any (array[p1, p2, p3, p4]) OR (select letter from yellow where position = 5) is null)
 	--
 	;
+
+
+SELECT
+	*
+FROM
+	WORDLE.COLOR_CALC_VIEW
+WHERE
+	FIRST_LETTER = 'black'
+	AND SECOND_LETTER = 'yellow'
+	AND THIRD_LETTER = 'yellow'
+	AND FOURTH_LETTER = 'yellow'
+	AND FIFTH_LETTER = 'black';
